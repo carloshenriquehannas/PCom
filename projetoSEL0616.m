@@ -23,7 +23,7 @@ A_max = 1.1;
 
 t_f1 = 5 * 10^-6;                                                          %Tempo final (s) para exercicio 1                                                           
 
-N = f_samp * (t_f1 - t_0);                                                   %Quantidade de amostragens, no intervalo de tempo solicitado
+N = f_samp * (t_f1 - t_0);                                                 %Quantidade de amostragens, no intervalo de tempo solicitado
 
 t = linspace(t_0, t_f1, N+1);                                              %Vetor de tempo, com N amostras
 
@@ -82,16 +82,15 @@ grid on
 t_i3 = 90 * 10^-6;                                                         %Tempo inicial (s) do exercicio 3
 t_f3 = 110 * 10^-6;                                                        %Tempo final (s) do exercicio 3
 
-x = linspace(-120, 120, round(t_f  * f_samp));                             %Amostragem de dados solicitada
+x = linspace(t_i3, t_f3, round((t_f3 - t_i3) * f_samp));                   %Vetor de tempo, com N amostras 
 
-m_t = sinc(x);                                                             %Funcao m(t)
+m_t = sinc(x - (100 * 10^-6));                                             %Funcao m(t)
 
 %Plot da mensagem m(t)
 figure
-plot(m_t);%Aqui deve colocar m(t) em funcao do tempo, nao em funcao de x
+plot(x, m_t);
 xlabel('Tempo (s)')
 ylabel('Amplitude')
-xlim([t_i3, t_f3])                                                         %Intervalo de tempo do grafico
 title('Mensagem m(t)')
 grid on
 
