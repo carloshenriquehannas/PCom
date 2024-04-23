@@ -21,22 +21,22 @@ t_f = 200 * 10^-6;                                                         %Temp
 A_min = -1.1; 
 A_max = 1.1;
 
-t_f1 = 5 * 10^-6;                                                          %Tempo final (s) para exercicio 1                                                           
+t1 = 5 * 10^-6;
 
-N = f_samp * (t_f1 - t_0);                                                   %Quantidade de amostragens, no intervalo de tempo solicitado
+N = f_samp * (t1 - t_0);                                                   %Quantidade de amostragens, no intervalo de tempo solicitado
 
-t = linspace(t_0, t_f1, N+1);                                              %Vetor de tempo, com N amostras
+t = linspace(t_0, t1, N+1);                                                %Vetor de tempo, com N amostras
 
 c_t = cos(2 * pi * f_c * t);                                               %Funcao da portadora c(t)
 
-ciclos = f_c * (t_f1 - t_0);                                               %Quantidade de ciclos no intervalo de tempo solicitado
+ciclos = f_c * (t1 - t_0);                                                 %Quantidade de ciclos no intervalo de tempo solicitado
 
 %Plot da portadora c(t)
 figure
 plot(t, c_t)
 xlabel('Tempo (s)')
 ylabel('Amplitude')
-ylim([A_min, A_max])                                                       %Intervalo de amplitude do grafico 
+ylim([A_min, A_max])                                                       %Intervalo de amplitude
 title('Portadora c(t)');
 grid on
 
@@ -78,9 +78,7 @@ grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Intervalo de tempo para plot
-t_i3 = 90 * 10^-6;                                                         %Tempo inicial (s) do exercicio 3
-t_f3 = 110 * 10^-6;                                                        %Tempo final (s) do exercicio 3
+
 
 x = linspace(-120, 120, round(t_f  * f_samp));                             %Amostragem de dados solicitada
 
@@ -88,10 +86,10 @@ m_t = sinc(x);                                                             %Func
 
 %Plot da mensagem m(t)
 figure
-plot(m_t);%Aqui deve colocar m(t) em funcao do tempo, nao em funcao de x
+plot(m_t);%Aqui deve colocar m(t) em funcao do tempo
 xlabel('Tempo (s)')
 ylabel('Amplitude')
-xlim([t_i3, t_f3])                                                         %Intervalo de tempo do grafico
+%xlim([])
 title('Mensagem m(t)')
 grid on
 
