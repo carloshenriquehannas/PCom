@@ -35,7 +35,7 @@ ciclos = f_c * (t_f1 - t_0);                                               %Quan
 figure
 plot(t, c_t)
 xlabel('Tempo (s)')
-ylabel('Amplitude de c(t)')
+ylabel('Amplitude')
 ylim([A_min, A_max])                                                       %Intervalo de amplitude do grafico 
 title('Portadora c(t)');
 grid on
@@ -54,16 +54,16 @@ f_pos_max = 2 * 10^6;
 
 C_f = fft(c_t);                                                            %C(f): Transformada de Fourier de c(t)
 
-f = linspace(-f_samp/2, f_samp/2, N+1);                                    %Vetor de amostragem de frequencias 
+f = linspace(-f_samp/2, f_samp/2, N+1);                                    %Vetor de intervalo de frequencias do espectro
 
 %Plot dos espectros negativo e positivo
 figure
 subplot(1,2,1)                                                             %Posicao do espectro negativo no grafico
 plot(f, fftshift(abs(C_f)))
 xlabel('Frequência (Hz)')
-ylabel('Amplitude de C(f)')
+ylabel('C(f)')
 xlim([f_neg_min, f_neg_max])                                               %Intervalo de frequencia do espectro negativo
-title('Espectro negativo de C(f)')
+title('Espectro de frequência negativa')
 grid on
 
 subplot(1,2,2)                                                             %Posicao do espectro positivo no grafico
@@ -71,7 +71,7 @@ plot(f, fftshift(abs(C_f)))
 xlabel('Frequência (Hz)')
 ylabel('C(f)')
 xlim([f_pos_min, f_pos_max])                                               %Intervalo de frequencia do espectro positivo
-title('Espectro positivo de C(f)')
+title('Espectro de frequência positiva')
 grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -84,15 +84,15 @@ t_f3 = 110 * 10^-6;                                                        %Temp
 
 N = (t_f3 - t_i3) * f_samp;
 
-t = linspace(t_i3, t_f3, round(N));                                        %Vetor de tempo, com N amostras 
+x = linspace(t_i3, t_f3, round(N));                                        %Vetor de tempo, com N amostras 
 
-m_t = sinc(t - (100 * 10^-6));                                             %Funcao m(t)
+m_t = sinc(x - (100 * 10^-6));                                             %Funcao m(t)
 
 %Plot da mensagem m(t)
 figure
-plot(t, m_t);
+plot(x, m_t);
 xlabel('Tempo (s)')
-ylabel('Amplitude de m(t)')
+ylabel('Amplitude')
 title('Mensagem m(t)')
 grid on
 
@@ -100,21 +100,20 @@ grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Intervalo de frequencia 
 f_min = -2 * 10^6;
 f_max = 2 * 10^6;
 
-M_f = fft(m_t);                                                            %M(f): Transformada de Fourier de m(t)
+M_f = fft(m_t);
 
-f = linspace(-f_samp/2, f_samp/2, N+1);                                    %Vetor de amostragem de frequencias 
+f = linspace(-f_samp/2, f_samp/2, N+1);
 
-%Plot do espectro de M(f)
 figure
 plot(f, fftshift(abs(M_f)));
 xlabel('Frequência (Hz)')
-ylabel('Amplitude de M(f)')
+ylabel('M(f)')
 xlim([f_min, f_max])
-title('Espectro de M(f)')
+title()
 grid on
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
