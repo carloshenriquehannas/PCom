@@ -108,12 +108,14 @@ M_f = fft(m_t);                                                            %M(f)
 
 f = linspace(-f_samp/2, f_samp/2, N+1);                                    %Vetor de amostragem de frequencias 
 
+LMP = powerbw(abs(M_f), f);                                                %Calcula Largura de Meia Potencia (LMP)
+
 %Plot do espectro de M(f)
 figure
 plot(f, fftshift(abs(M_f)));
 xlabel('Frequência (Hz)')
 ylabel('Amplitude de M(f)')
-xlim([f_min, f_max])
+xlim([f_min, f_max])                                                       %Intervalo de frequencias no grafico
 title('Espectro de M(f)')
 grid on
 
