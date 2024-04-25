@@ -154,3 +154,29 @@ title('Espectro de S(f)')
 grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 7 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Intervalo de frequencia para plot no grafico
+f_min = -6 * 10^6;                                                         %Frequencia minima para plot do exercicio 7 (Hz)
+f_max = 6 * 10^6;                                                          %Frequencia maxima para plot do exercicio 7 (Hz)
+
+e_t = c_t .* s_t;
+
+E_f = fft(e_t);                                                            %E(f): Transformada de Fourier de e(t)
+
+%Plot do sinal modulado de e(t)
+figure
+plot(f, fftshift(abs(E_f)));
+xlabel('Frequência (Hz)')
+ylabel('Amplitude de E(f)')
+xlim([f_min, f_max])                                                       %Intervalo de frequencia no grafico
+title('Espectro de E(f)')
+grid on
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
