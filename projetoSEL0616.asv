@@ -17,9 +17,6 @@ t_f = 200 * 10^-6;                                                         %Temp
 
 N = f_samp * (t_f - t_0);                                                  %Quantidade de amostragens, no intervalo total de tempo
 
-t = linspace(t_0, t_f, round(N));                                          %Vetor de tempo, com N amostras
-f = linspace(-f_samp/2, f_samp/2, N);                                      %Vetor de frequencia, com N amostras
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 1 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Intervalo de amplitude para plot no grafico
@@ -29,6 +26,8 @@ A_max = 1.1;                                                               %Ampl
 %Intervalo de tempo para plot no grafico
 t_min = 0;                                                                 %Tempo minimo para plot do exercicio 1 (s)
 t_max = 5 * 10^-6;                                                         %Tempo maximo para plot do exercicio 1 (s)
+
+t = linspace(t_0, t_f, N);                                                 %Vetor de tempo, com N amostras
 
 c_t = cos(2 * pi * f_c * t);                                               %Funcao da portadora c(t)
 
@@ -56,6 +55,8 @@ f_pos_max = 2 * 10^6;                                                      %Freq
 
 C_f = fft(c_t);                                                            %C(f): Transformada de Fourier de c(t)
 
+f = linspace(-f_samp/2, f_samp/2, N);                                      %Vetor de frequencia, com N amostras
+
 %Plot dos espectros negativo e positivo
 figure
 subplot(1,2,1)                                                             %Posicao do espectro negativo no grafico
@@ -82,14 +83,14 @@ grid on
 t_min = 90 * 10^-6;                                                        %Tempo minimo para plot do exercicio 3 (s)
 t_max = 110 * 10^-6;                                                       %Tempo maximo para plot do exercicio 3 (s)
 
-m_t = sinc(t - (100 * 10^-6));                                             %Funcao da mensagem m(t)
+m_t = sinc(t - (100 * 10^-6));                                             %Funcao m(t)
 
 %Plot da mensagem m(t)
 figure
 plot(t, m_t);
 xlabel('Tempo (s)')
 ylabel('Amplitude de m(t)')
-xlim([t_min, t_max])                                                       %Intervalo de tempo do grafico
+xlim([t_min, t_max])
 title('Mensagem m(t)')
 grid on
 
@@ -97,11 +98,13 @@ grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 4 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Intervalo de frequencia para plot no grafico
-f_min = -2 * 10^6;                                                         %Frequencia minima para plot do exercicio 4 (Hz)
-f_max = 2 * 10^6;                                                          %Frequencia maxima para plot do exercicio 4 (Hz)
+%Intervalo de frequencia 
+f_min = -2 * 10^6;
+f_max = 2 * 10^6;
 
 M_f = fft(m_t);                                                            %M(f): Transformada de Fourier de m(t)
+
+f = linspace(-f_samp/2, f_samp/2, N);                                      %Vetor de amostragem de frequencias 
 
 LMP = powerbw(abs(M_f), f);                                                %Calcula Largura de Meia Potencia (LMP)
 
@@ -110,28 +113,8 @@ figure
 plot(f, fftshift(abs(M_f)));
 xlabel('Frequência (Hz)')
 ylabel('Amplitude de M(f)')
-xlim([f_min, f_max])                                                       %Intervalo de frequencia no grafico
+xlim([f_min, f_max])                                                       %Intervalo de frequencias no grafico
 title('Espectro de M(f)')
-grid on
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 5 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Intervalo de tempo para plot no grafico
-t_min = 90 * 10^-6;                                                        %Tempo minimo para plot do exercicio 5 (s)
-t_max = 110 * 10^-6;                                                       %Tempo maximo para plot do exercicio 5 (s)
-
-s_t = c_t .* m_t;                                                          %Funcao do sinal modulado s(t)
-
-%Plot do sinal modulado de s(t)
-figure
-plot(t, s_t);
-xlabel('Tempo (s)')
-ylabel('Amplitude de s(t)')
-xlim([t_min, t_max])                                                       %Intervalo de tempo no grafico
-ylim([A_min, A_max])                                                       %Intervalo de amplitude no grafico
-title('Sinal modulado s(t)')
 grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
