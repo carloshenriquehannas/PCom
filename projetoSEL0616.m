@@ -135,3 +135,22 @@ title('Sinal modulado s(t)')
 grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 6 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+%Intervalo de frequencia para plot no grafico
+f_min = -5 * 10^6;                                                         %Frequencia minima para plot do exercicio 6 (Hz)
+f_max = 5 * 10^6;                                                          %Frequencia maxima para plot do exercicio 6 (Hz)
+
+S_f = fft(s_t);                                                            %S(f): Transformada de Fourier de s(t)
+
+%Plot do sinal modulado de s(t)
+figure
+plot(f, fftshift(abs(S_f)));
+xlabel('Frequência (Hz)')
+ylabel('Amplitude de S(f)')
+xlim([f_min, f_max])                                                       %Intervalo de tempo no grafico
+title('Espectro de S(f)')
+grid on
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
