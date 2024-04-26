@@ -180,18 +180,7 @@ grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Intervalo de frequencia para plot no grafico
-f_min = -5 * 10^6;                                                         %Frequencia minima para plot do exercicio 6 (Hz)
-f_max = 5 * 10^6;                                                          %Frequencia maxima para plot do exercicio 6 (Hz)
-
-filtro = zeros(1, N);
-filtro(abs(f) >= f_min & abs(f) <= f_max) = 1;                             % Filtro entre -2MHz e 2MHz
-
-X_f = filtro .* E_f;
-
-figure
-plot(f, X_f)
-grid on
+filtro(abs(f) >= f1 & abs(f) <= f2) = 1; % Filtro retangular entre -2MHz e 2MHz
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
