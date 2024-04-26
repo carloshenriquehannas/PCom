@@ -84,11 +84,11 @@ grid on
 t_min = 90 * 10^-6;                                                        %Tempo minimo para plot do exercicio 3 (s)
 t_max = 110 * 10^-6;                                                       %Tempo maximo para plot do exercicio 3 (s)
 
-m_t = sinc(t - (100 * 10^-6));                                             %Funcao da mensagem m(t)
+m1_t = sinc(t - (100 * 10^-6));                                            %Funcao da mensagem m(t)
 
 %Plot da mensagem m(t)
 figure
-plot(t, m_t);
+plot(t, m1_t);
 xlabel('Tempo (s)')
 ylabel('Amplitude de m(t)')
 xlim([t_min, t_max])                                                       %Intervalo de tempo do grafico
@@ -103,13 +103,13 @@ grid on
 f_min = -2 * 10^6;                                                         %Frequencia minima para plot do exercicio 4 (Hz)
 f_max = 2 * 10^6;                                                          %Frequencia maxima para plot do exercicio 4 (Hz)
 
-M_f = fft(m_t);                                                            %M(f): Transformada de Fourier de m(t)
+M1_f = fft(m1_t);                                                            %M(f): Transformada de Fourier de m(t)
 
-LMP = powerbw(abs(M_f), f);                                                %Calcula Largura de Meia Potencia (LMP)
+LMP = powerbw(abs(M1_f), f);                                                %Calcula Largura de Meia Potencia (LMP)
 
 %Plot do espectro de M(f)
 figure
-plot(f, (fftshift(abs(M_f))));
+plot(f, (fftshift(abs(M1_f))));
 xlabel('Frequência (Hz)')
 ylabel('Amplitude de M(f)')
 xlim([f_min, f_max])                                                       %Intervalo de frequencia no grafico
@@ -124,7 +124,7 @@ grid on
 t_min = 90 * 10^-6;                                                        %Tempo minimo para plot do exercicio 5 (s)
 t_max = 110 * 10^-6;                                                       %Tempo maximo para plot do exercicio 5 (s)
 
-s_t = c_t .* m_t;                                                          %Funcao do sinal modulado s(t)
+s_t = c_t .* m1_t;                                                          %Funcao do sinal modulado s(t)
 
 %Plot do sinal modulado de s(t)
 figure
@@ -152,6 +152,7 @@ plot(f, fftshift(abs(S_f)));
 xlabel('Frequência (Hz)')
 ylabel('Amplitude de S(f)')
 xlim([f_min, f_max])                                                       %Intervalo de tempo no grafico
+ylim([0, 6000])
 title('Espectro de S(f)')
 grid on
 
@@ -181,21 +182,51 @@ grid on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 8 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Intervalo de frequencia para plot no grafico
-f_min = -5 * 10^6;                                                         %Frequencia minima para plot do exercicio 6 (Hz)
-f_max = 5 * 10^6;                                                          %Frequencia maxima para plot do exercicio 6 (Hz)
+f_min = -6 * 10^6;                                                         %Frequencia minima para plot do exercicio 8 (Hz)
+f_max = 6 * 10^6;                                                          %Frequencia maxima para plot do exercicio 8 (Hz)
 
-filtro = zeros(1, N);
-filtro(abs(f) >= f_min & abs(f) <= f_max) = 1;                             % Filtro entre -2MHz e 2MHz
+%Intervalo de frequencia para FPB aceitar
+f_neg_min = -2 * 10^6;                                                     %Frequencia minima aceitavel pelo FPB (Hz)
+f_pos_max = 2* 10^6;                                                       %Frequencia maxima aceitavel pelo FPB (Hz)
 
-X_f = filtro .* E_f;
+%Definicao de sistemas dinamicos
+qsi = sqrt(2)/2;
+w_n = 2 * pi * 2 * 10^6;
+num = w_n^2;
+den = [1 2*qsi*w_n w_n^2];
+
+x_t = lsim(num, den, e_t, t);                                              %Resposta temporal x(t) simulada para o FPB
+X_f = fft(x_t);                                                            %X(f): Transformada de Fourier de x(t)
+
+FPB = zeros(1, N);                                                         %Inicializacao do FPB (filtro passa-baixa)
+FPB(f >= f_neg_min & f <= f_pos_max) = 1;                                  %FPB aceita valores entre -2MHz e 2MHz
 
 figure
-plot(f, X_f)
+subplot(1,2,1)
+plot(fftshift(abs(X_f)))
+xlim([f_min, f_max])                                                       %Intervalo de frequencia no grafico
+ylim([0, 5500])
+grid on
+subplot(1,2,2)
+plot(f, FPB, f, fftshift(abs(E_f)))
 grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+m2_t = ifft(ifftshift(fftshift(X_f)));                                     %Recuperacao do sinal m'(t)
+
+%Plot do sinal recuperado de m'(t)
+figure
+plot(t, m2_t)
+xlabel('Tempo (s)')
+ylabel('Amplitude de m''(t)')
+xlim([t_min, t_max])                                                       %Intervalo de tempo no grafico
+title('Sinal recuperado m''(t)')
+grid on
+
+coef = corrcoef(m1_t, m2_t);                                               %Coeficiente de relacao entre os sinais m(t) e m'(t)
+fprintf('Coeficiente de relação entre os sinais: %.4f\n', coef(1,2));   
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
