@@ -84,7 +84,7 @@ grid on
 t_min = 90 * 10^-6;                                                        %Tempo minimo para plot do exercicio 3 (s)
 t_max = 110 * 10^-6;                                                       %Tempo maximo para plot do exercicio 3 (s)
 
-m1_t = sinc(t - (100 * 10^-6));                                            %Funcao da mensagem m(t)
+m1_t = sinc((t - 100 * 10^-6) * 1e6);                                   %Funcao da mensagem m(t)
 
 %Plot da mensagem m(t)
 figure
@@ -103,9 +103,9 @@ grid on
 f_min = -2 * 10^6;                                                         %Frequencia minima para plot do exercicio 4 (Hz)
 f_max = 2 * 10^6;                                                          %Frequencia maxima para plot do exercicio 4 (Hz)
 
-M1_f = fft(m1_t);                                                            %M(f): Transformada de Fourier de m(t)
+M1_f = fft(m1_t);                                                          %M(f): Transformada de Fourier de m(t)
 
-LMP = powerbw(abs(M1_f), f);                                                %Calcula Largura de Meia Potencia (LMP)
+LMP = powerbw(abs(M1_f), f);                                               %Calcula Largura de Meia Potencia (LMP)
 
 %Plot do espectro de M(f)
 figure
@@ -152,7 +152,6 @@ plot(f, fftshift(abs(S_f)));
 xlabel('Frequência (Hz)')
 ylabel('Amplitude de S(f)')
 xlim([f_min, f_max])                                                       %Intervalo de tempo no grafico
-ylim([0, 6000])
 title('Espectro de S(f)')
 grid on
 
@@ -168,13 +167,13 @@ e_t = c_t .* s_t;                                                          %Func
 
 E_f = fft(e_t);                                                            %E(f): Transformada de Fourier de e(t)
 
-%Plot do sinal modulado de e(t)
+%Plot do sinal demodulado de e(t)
 figure
 plot(f, fftshift(abs(E_f)));
 xlabel('Frequência (Hz)')
 ylabel('Amplitude de E(f)')
 xlim([f_min, f_max])                                                       %Intervalo de frequencia no grafico
-title('Espectro de E(f)')
+title('Espectro do sinal demodulado E(f)')
 grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -203,12 +202,18 @@ FPB(f >= f_neg_min & f <= f_pos_max) = 1;                                  %FPB 
 
 figure
 subplot(1,2,1)
-plot(fftshift(abs(X_f)))
+plot((abs(X_f)))
+xlabel('Frequência (Hz)')
+ylabel('Amplitude do espectro')
 xlim([f_min, f_max])                                                       %Intervalo de frequencia no grafico
-ylim([0, 5500])
+title('Espectro do sinal após o filtro')
 grid on
+
 subplot(1,2,2)
-plot(f, FPB, f, fftshift(abs(E_f)))
+plot(f, FPB, f, (abs(E_f)))
+xlabel('Frequência (Hz)')
+ylabel('Amplitude do filtro')
+title('Filtro retangular')
 grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
