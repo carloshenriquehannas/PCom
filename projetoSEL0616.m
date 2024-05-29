@@ -81,17 +81,19 @@ grid on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 3 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 %Intervalo de tempo para plot no grafico
-t_min = 90 * 10^-6;                                                        %Tempo minimo para plot do exercicio 3 (s)
-t_max = 110 * 10^-6;                                                       %Tempo maximo para plot do exercicio 3 (s)
+t_min = 90;                                                                %Tempo minimo para plot do exercicio 3 (us)
+t_max = 110;                                                               %Tempo maximo para plot do exercicio 3 (us)
 
-m1_t = sinc((t - 100 * 10^-6) * 1e6);                                   %Funcao da mensagem m(t)
+x = linspace(-120, 120, round(N));                                         %Define uma frequencia para sinc()
+m1 = sinc(x);                                                              %Funcao da mensagem m(t)
 
 %Plot da mensagem m(t)
 figure
-plot(t, m1_t);
-xlabel('Tempo (s)')
+plot(t/1e-6, m1);
+xlabel('Tempo (us)')
 ylabel('Amplitude de m(t)')
 xlim([t_min, t_max])                                                       %Intervalo de tempo do grafico
+ylim([-0.3, 1.1])                                                          %Intervalo auxiliar
 title('Mensagem m(t)')
 grid on
 
@@ -103,13 +105,13 @@ grid on
 f_min = -2 * 10^6;                                                         %Frequencia minima para plot do exercicio 4 (Hz)
 f_max = 2 * 10^6;                                                          %Frequencia maxima para plot do exercicio 4 (Hz)
 
-M1_f = fft(m1_t);                                                          %M(f): Transformada de Fourier de m(t)
+M1 = fft(m1);                                                              %M(f): Transformada de Fourier de m(t)
 
-LMP = powerbw(abs(M1_f), f);                                               %Calcula Largura de Meia Potencia (LMP)
+LMP = powerbw(abs(M1), f);                                                 %Calcula Largura de Meia Potencia (LMP)
 
 %Plot do espectro de M(f)
 figure
-plot(f, (fftshift(abs(M1_f))));
+plot(f, (fftshift(abs(M1))));
 xlabel('Frequência (Hz)')
 ylabel('Amplitude de M(f)')
 xlim([f_min, f_max])                                                       %Intervalo de frequencia no grafico
@@ -124,7 +126,7 @@ grid on
 t_min = 90 * 10^-6;                                                        %Tempo minimo para plot do exercicio 5 (s)
 t_max = 110 * 10^-6;                                                       %Tempo maximo para plot do exercicio 5 (s)
 
-s_t = c_t .* m1_t;                                                          %Funcao do sinal modulado s(t)
+s_t = c_t .* m1;                                                           %Funcao do sinal modulado s(t)
 
 %Plot do sinal modulado de s(t)
 figure
@@ -220,18 +222,18 @@ grid on
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-m2_t = ifft(ifftshift(fftshift(X_f)));                                     %Recuperacao do sinal m'(t)
+m2 = ifft(ifftshift(fftshift(X_f)));                                       %Recuperacao do sinal m'(t)
 
 %Plot do sinal recuperado de m'(t)
 figure
-plot(t, m2_t)
+plot(t, m2)
 xlabel('Tempo (s)')
 ylabel('Amplitude de m''(t)')
 xlim([t_min, t_max])                                                       %Intervalo de tempo no grafico
 title('Sinal recuperado m''(t)')
 grid on
 
-coef = corrcoef(m1_t, m2_t);                                               %Coeficiente de relacao entre os sinais m(t) e m'(t)
+coef = corrcoef(m1, m2);                                                   %Coeficiente de relacao entre os sinais m(t) e m'(t)
 fprintf('Coeficiente de relação entre os sinais: %.4f\n', coef(1,2));   
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
