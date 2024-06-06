@@ -108,6 +108,7 @@ f_max = 2 * 10^6;                                                          %Freq
 M1 = fft(m1);                                                              %M(f): Transformada de Fourier de m(t)
 
 LMP = powerbw(abs(M1), f);                                                 %Calcula Largura de Meia Potencia (LMP)
+fprintf('Largura de Meia Potencia: %.4f\n', LMP);
 
 %Plot do espectro de M(f)
 figure
