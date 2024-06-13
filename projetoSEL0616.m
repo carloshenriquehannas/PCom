@@ -71,7 +71,7 @@ grid on
 subplot(1,2,2)                                                             %Posicao do espectro positivo no grafico
 plot(f, fftshift(abs(C_f)))
 xlabel('Frequência (Hz)')
-ylabel('C(f)')
+ylabel('Amplitude de C(f)')
 xlim([f_pos_min, f_pos_max])                                               %Intervalo de frequencia do espectro positivo no grafico
 title('Espectro positivo de C(f)')
 grid on
@@ -205,7 +205,7 @@ FPB(f >= f_neg_min & f <= f_pos_max) = 1;                                  %FPB 
 
 figure
 subplot(1,2,1)
-plot((abs(X_f)))
+plot(fftshift(abs(X_f)))
 xlabel('Frequência (Hz)')
 ylabel('Amplitude do espectro')
 xlim([f_min, f_max])                                                       %Intervalo de frequencia no grafico
@@ -213,9 +213,11 @@ title('Espectro do sinal após o filtro')
 grid on
 
 subplot(1,2,2)
-plot(f, FPB, f, (abs(E_f)))
+plot(f, FPB, f, fftshift(abs(E_f)))
+legend('FPB', 'E(f)')
 xlabel('Frequência (Hz)')
 ylabel('Amplitude do filtro')
+xlim([f_min, f_max])
 title('Filtro retangular')
 grid on
 
