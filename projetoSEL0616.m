@@ -11,8 +11,8 @@ clear all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% DADOS INICIAIS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%f_c = 2 * 10^6;                                                            %Frequencia da portadora 1 (Hz)
-f_c = 0.5 * 10^6;                                                          %Frequencia da portadora 2 (Hz)                                  
+%f_c = 2 * 10^6;                                                            %Frequencia da portadora para questoes 1-9 (Hz)
+f_c = 0.5 * 10^6;                                                          %Frequencia da portadora para questao 10 (Hz)                                  
 f_samp = 50 * 10^6;                                                        %Frequencia de amostragem (Hz)
 
 t_0 = 0;                                                                   %Tempo inicial (s)
@@ -229,7 +229,6 @@ grid on
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% EXERCICIO 9 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 m2 = ifft(ifftshift(fftshift(X_f)));                                       %Recuperacao do sinal m'(t)
-
 
 %Plot do sinal recuperado de m'(t)
 figure
