@@ -11,7 +11,8 @@ clear all
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% DADOS INICIAIS %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-f_c = 2 * 10^6;                                                            %Frequencia da portadora (Hz)
+%f_c = 2 * 10^6;                                                            %Frequencia da portadora 1 (Hz)
+f_c = 0.5 * 10^6;                                                          %Frequencia da portadora 2 (Hz)                                  
 f_samp = 50 * 10^6;                                                        %Frequencia de amostragem (Hz)
 
 t_0 = 0;                                                                   %Tempo inicial (s)
@@ -203,6 +204,7 @@ X_f = fft(x_t);                                                            %X(f)
 FPB = zeros(1, N);                                                         %Inicializacao do FPB (filtro passa-baixa)
 FPB(f >= f_neg_min & f <= f_pos_max) = 1;                                  %FPB aceita valores entre -2MHz e 2MHz
 
+%Plot do espectro apos FPB
 figure
 subplot(1,2,1)
 plot(fftshift(abs(X_f)))
@@ -212,6 +214,7 @@ xlim([f_min, f_max])                                                       %Inte
 title('Espectro do sinal após o filtro')
 grid on
 
+%Plot do FPB
 subplot(1,2,2)
 plot(f, FPB, f, fftshift(abs(E_f)))
 legend('FPB', 'E(f)')
@@ -227,8 +230,10 @@ grid on
 
 m2 = ifft(ifftshift(fftshift(X_f)));                                       %Recuperacao do sinal m'(t)
 
+
 %Plot do sinal recuperado de m'(t)
 figure
+subplot(1,2,1)
 plot(t, m2)
 xlabel('Tempo (s)')
 ylabel('Amplitude de m''(t)')
@@ -238,5 +243,20 @@ grid on
 
 coef = corrcoef(m1, m2);                                                   %Coeficiente de relacao entre os sinais m(t) e m'(t)
 fprintf('Coeficiente de relação entre os sinais: %.4f\n', coef(1,2));   
+
+%Calculo da parte real dos sinais original e recuperado
+parte_real_m1 = real(m1);
+parte_real_m2 = real(m2);
+
+%Plot dos sinais original e recuperado
+subplot(1,2,2)
+plot(t/1e-6, parte_real_m1, 'b', t/1e-6, parte_real_m2, 'r--');
+xlabel('Tempo (us)')
+ylabel('Amplitude de m''(t)')
+ylim([-0.3, 1.1])                                                          %Intervalo auxiliar
+title('Comparação entre m(t) e m''(t)')
+legend('Original m(t)', 'Recuperado m''(t)')
+grid on
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
